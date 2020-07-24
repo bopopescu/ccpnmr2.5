@@ -121,11 +121,11 @@ def getCcpnObjects(parent,IOdefault):
 
   return ccpnObjects
   
-def setIoInfo(master,setupInfo,project,fileDefs,forceCreation = False, appendNone = False):
+def setIoInfo(main,setupInfo,project,fileDefs,forceCreation = False, appendNone = False):
   
   (widgetType,IOkeywd,labelText,IOdefault,extraDefs) = setupInfo
   
-  label = Label(master, text = labelText)
+  label = Label(main, text = labelText)
   widget = None
   selectionDict = None
   
@@ -135,11 +135,11 @@ def setIoInfo(master,setupInfo,project,fileDefs,forceCreation = False, appendNon
     if extraDefs and extraDefs.has_key('width'):
       addKeywds['width'] = extraDefs['width']
       
-    widget = Entry(master, text='%s' % str(IOdefault),**addKeywds)
+    widget = Entry(main, text='%s' % str(IOdefault),**addKeywds)
     
   elif widgetType == 'CheckButton':
   
-    widget = CheckButton(master)
+    widget = CheckButton(main)
     widget.setSelected(IOdefault)
     
   elif widgetType[:13] == 'SelectionList' or widgetType[:18] == 'MultiSelectionList':
@@ -162,9 +162,9 @@ def setIoInfo(master,setupInfo,project,fileDefs,forceCreation = False, appendNon
     
     if selectionList:
       if widgetType[:13] == 'SelectionList':
-        widget = PulldownList(master, texts = selectionList)
+        widget = PulldownList(main, texts = selectionList)
       elif widgetType[:18] == 'MultiSelectionList':
-        widget = ScrolledListbox(master,height = 5,selectmode = Tkinter.MULTIPLE,initial_list = selectionList)
+        widget = ScrolledListbox(main,height = 5,selectmode = Tkinter.MULTIPLE,initial_list = selectionList)
 
   elif widgetType in ('FileButton','FileMultiButton','DirButton'):
  
@@ -183,10 +183,10 @@ def setIoInfo(master,setupInfo,project,fileDefs,forceCreation = False, appendNon
       else:
         multiSelect = False
       
-      widget = Tkinter.Button(master, text = IOdefault, command = lambda comp = component, format = format, buttonKeyword = IOkeywd, defaultText = IOdefault, fileComponent = fileComponent, multiSelect = multiSelect: selectFile(comp,format,buttonKeyword,defaultText,fileComponent,multiSelect = multiSelect))
+      widget = Tkinter.Button(main, text = IOdefault, command = lambda comp = component, format = format, buttonKeyword = IOkeywd, defaultText = IOdefault, fileComponent = fileComponent, multiSelect = multiSelect: selectFile(comp,format,buttonKeyword,defaultText,fileComponent,multiSelect = multiSelect))
 
     elif widgetType == 'DirButton':
-      widget = Tkinter.Button(master, text = IOdefault, command = lambda comp = component, format = format, buttonKeyword = IOkeywd: selectDir(comp,format,buttonKeyword))
+      widget = Tkinter.Button(main, text = IOdefault, command = lambda comp = component, format = format, buttonKeyword = IOkeywd: selectDir(comp,format,buttonKeyword))
 
   return (label,widget,selectionDict)
 
@@ -423,14 +423,14 @@ class GenericFormatPopup(BasePopup):
     # TODO: use labels here instead of name    
     BasePopup.__init__(self,parent = parent, title = self.titleText, modal = False, transient=False)
  
-  def body(self, master):
+  def body(self, main):
 
     # Ensure that the first row and column in popup expand
-    master.grid_rowconfigure(0, weight=1)
-    master.grid_columnconfigure(0, weight=1, minsize=200)
+    main.grid_rowconfigure(0, weight=1)
+    main.grid_columnconfigure(0, weight=1, minsize=200)
 
     # add a scrolled frame for the widgets
-    scrolledFrame = ScrolledFrame(master, xscroll=False)
+    scrolledFrame = ScrolledFrame(main, xscroll=False)
     scrolledFrame.grid(row=0, column=0, sticky='nsew')
     _frame = scrolledFrame.frame
 

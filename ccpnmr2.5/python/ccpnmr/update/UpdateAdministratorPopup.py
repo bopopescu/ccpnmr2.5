@@ -62,7 +62,7 @@ from ccpnmr.analysis.Version import version
 
 
 SERVERUSER = 'ccpn'
-BASEBRANCH = 'master'
+BASEBRANCH = 'main'
 UPDATEBRANCH = '.'
 DEFAULTFILTER = ''
 
